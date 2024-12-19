@@ -30,5 +30,4 @@ app.get('/api', (req: Request, res: Response) => {
   res.send('This is the root API route!')
 })
 
-
 export default app

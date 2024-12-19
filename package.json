@@ -4,15 +4,14 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "tsc",
-    "clear:dist": "rm -rf dist",
-    "start": "clear:dist && tsc && node ./dist/server.js",
-    "start:prod": "clear:dist && tsc && nodemon ./dist/server.js",
+    "start": "tsc && node ./dist/server.js",
+    "start:prod": "tsc && nodemon ./dist/server.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "clear": "rm -rf dist && rm -rf node_modules && rm -rf package-lock.json",
-    "ci": "clear && npm install",
+    "clean": "rm -rf dist && rm -rf node_modules && rm -rf package-lock.json && npm install",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "deploy": "tsc && vercel --prod"
   },
   "keywords": [],
   "author": "",

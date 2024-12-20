@@ -1,24 +1,22 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-import { IErrorResponse, IErrorSource } from '../interface/error';
+import { IErrorResponse, IErrorSource } from '../interface/error'
 
-const handleCastError = (
-  error: mongoose.Error.CastError,
-): IErrorResponse => {
+const handleCastError = (error: mongoose.Error.CastError): IErrorResponse => {
   const errorSources: IErrorSource[] = [
     {
       path: error.path,
-      message: `Invalid value for the field '${error.path}'. Expected a valid ${error.kind}.`,
-    },
-  ];
+      message: `Invalid value for the field '${error.path}'. Expected a valid ${error.kind}.`
+    }
+  ]
 
-  const statusCode = 400;
+  const statusCode = 400
 
   return {
     statusCode,
     message: 'Invalid input data.',
-    errorSources,
-  };
-};
+    errorSources
+  }
+}
 
-export default handleCastError;
+export default handleCastError

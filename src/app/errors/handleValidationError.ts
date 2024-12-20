@@ -1,26 +1,26 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-import { IErrorResponse, IErrorSource } from '../interface/error';
+import { IErrorResponse, IErrorSource } from '../interface/error'
 
 const handleValidationError = (
-  err: mongoose.Error.ValidationError,
+  err: mongoose.Error.ValidationError
 ): IErrorResponse => {
   const errorSources: IErrorSource[] = Object.values(err.errors).map(
     (val: mongoose.Error.ValidatorError | mongoose.Error.CastError) => {
       return {
         path: val?.path,
-        message: val?.message,
-      };
-    },
-  );
+        message: val?.message
+      }
+    }
+  )
 
-  const statusCode = 400;
+  const statusCode = 400
 
   return {
     statusCode,
     message: 'Validation Error',
-    errorSources,
-  };
-};
+    errorSources
+  }
+}
 
-export default handleValidationError;
+export default handleValidationError

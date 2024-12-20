@@ -1,4 +1,4 @@
-export enum statusCode {
+export enum httpStatusCode {
   // 1xx Informational
   CONTINUE = 100,
   SWITCHING_PROTOCOLS = 101,
@@ -69,5 +69,5 @@ export enum statusCode {
   INSUFFICIENT_STORAGE = 507,
   LOOP_DETECTED = 508,
   NOT_EXTENDED = 510,
-  NETWORK_AUTHENTICATION_REQUIRED = 511,
+  NETWORK_AUTHENTICATION_REQUIRED = 511
 }

@@ -2,6 +2,7 @@ import cors from 'cors'
 import express, { Application, Request, Response } from 'express'
 
 import apiInfoLogger from './app/middlewares/apiInfoLogger'
+import errorHandler from './app/middlewares/errorHandler'
 import notFound from './app/middlewares/notFound'
 
 // ** express app **
@@ -40,6 +41,6 @@ app.get('/api', (req: Request, res: Response) => {
 app.use('*', notFound)
 
 // ** Error Handler **
-// app.use(errorHandler)
+app.use(errorHandler)
 
 export default app

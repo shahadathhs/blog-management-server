@@ -1,6 +1,9 @@
 import cors from 'cors'
 import express, { Application, Request, Response } from 'express'
 
+import apiInfoLogger from './app/middlewares/apiInfoLogger'
+import notFound from './app/middlewares/notFound'
+
 // ** express app **
 const app: Application = express()
 
@@ -22,6 +25,9 @@ app.use(
   })
 )
 
+// ** API Info Logger **
+app.use(apiInfoLogger)
+
 // ** Default Routes **
 app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to Blog Management System!')
@@ -29,5 +35,11 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/api', (req: Request, res: Response) => {
   res.send('This is the root API route!')
 })
+
+// ** API Endpoint Not Found **
+app.use('*', notFound)
+
+// ** Error Handler **
+// app.use(errorHandler)
 
 export default app

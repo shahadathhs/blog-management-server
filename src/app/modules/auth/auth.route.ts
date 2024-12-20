@@ -1,9 +1,22 @@
 import { Router } from 'express'
 
+import validateRequest from '../../middlewares/validateRequest'
+
+import { AuthController } from './auth.controller'
+import { AuthValidation } from './auth.validation'
+
 const router = Router()
 
-router.get('/', (req, res) => {
-  res.send('Auth route')
-})
+router.post(
+  '/register',
+  validateRequest(AuthValidation.registerUserZodSchema),
+  AuthController.registerUser
+)
+
+router.post(
+  '/login',
+  validateRequest(AuthValidation.loginUserZodSchema),
+  AuthController.loginUser
+)
 
 export const AuthRoutes = router

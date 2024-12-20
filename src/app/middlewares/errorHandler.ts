@@ -16,10 +16,10 @@ const errorHandler: ErrorRequestHandler = (
 
   // * Send a generic error message
   res.status(errorResponse.statusCode).send({
-    status: errorResponse.statusCode,
     success: false,
+    statusCode: errorResponse.statusCode,
     message: errorResponse.message,
-    errorSources: errorResponse.errorSources,
+    error: errorResponse.errorSources, // * Error sources is being send as error in the response
     stack: configuration.env === 'development' ? err : undefined
   })
 }

@@ -6,12 +6,22 @@ const UserSchema: Schema = new Schema<IUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     role: { type: String, enum: ["admin", "user"], default: "user" },
     isBlocked: { type: Boolean, default: false },
   },
   {
     timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.password;
+      },
+    },
+    toObject: {
+      transform(doc, ret) {
+        delete ret.password;
+      },
+    },
   }
 );
 

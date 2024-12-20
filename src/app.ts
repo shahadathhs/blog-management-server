@@ -4,6 +4,7 @@ import express, { Application, Request, Response } from 'express'
 import apiInfoLogger from './app/middlewares/apiInfoLogger'
 import errorHandler from './app/middlewares/errorHandler'
 import notFound from './app/middlewares/notFound'
+import router from './app/routes/router'
 
 // ** express app **
 const app: Application = express()
@@ -36,6 +37,9 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/api', (req: Request, res: Response) => {
   res.send('This is the root API route!')
 })
+
+// ** Routes **
+app.use('/api', router)
 
 // ** API Endpoint Not Found **
 app.use('*', notFound)

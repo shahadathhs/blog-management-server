@@ -18,6 +18,8 @@
   "license": "ISC",
   "description": "This is a blog management system. It is a backend only application.",
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

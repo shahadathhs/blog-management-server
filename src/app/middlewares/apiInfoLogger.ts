@@ -50,7 +50,8 @@ const apiInfoLogger = (req: Request, res: Response, next: NextFunction) => {
       statusCode: res.statusCode,
       responseBody: responseBody
         ? JSON.stringify(responseBody)
-        : 'No response body'
+        : 'No response body',
+      responseHeaders: res.getHeaders()
     }
 
     logger.info(`Response Sent: ${JSON.stringify(responseLog)}`)

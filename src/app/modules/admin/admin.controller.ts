@@ -6,6 +6,7 @@ import AppError from '../../errors/AppError'
 import sendError from '../../utils/sendError'
 import sendResponse from '../../utils/sendResponse'
 import simplifyError from '../../utils/simplifyError'
+import Blog from '../blogs/blogs.model'
 import User from '../user/user.model'
 
 const blockUser = async (
@@ -59,6 +60,47 @@ const blockUser = async (
   }
 }
 
+const deleteBlog = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { id } = req.params
+
+    if (!id) {
+      throw new AppError(httpStatusCode.BAD_REQUEST, 'Blog ID is required')
+    }
+    if (!mongoose.isValidObjectId(id)) {
+      throw new AppError(httpStatusCode.BAD_REQUEST, 'Invalid blog ID')
+    }
+
+    const blog = await Blog.findById(id)
+    if (!blog) {
+      throw new AppError(httpStatusCode.NOT_FOUND, 'Blog not found')
+    }
+
+    const deletedBlog = await Blog.findByIdAndDelete(id)
+
+    if (!deletedBlog) {
+      throw new AppError(
+        httpStatusCode.INTERNAL_SERVER_ERROR,
+        'Failed to delete blog'
+      )
+    }
+
+    sendResponse(res, {
+      statusCode: httpStatusCode.OK,
+      success: true,
+      message: 'Blog deleted successfully'
+    })
+  } catch (error) {
+    const errorMessage = simplifyError(error)
+    sendError(res, errorMessage)
+    next(error)
+  }
+}
 export const AdminController = {
-  blockUser
+  blockUser,
+  deleteBlog
 }

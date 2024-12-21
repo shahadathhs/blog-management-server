@@ -30,7 +30,7 @@ const loginUser = async (payload: {
 }): Promise<{ token: string }> => {
   const { email, password } = payload
 
-  const user = await User.findOne({ email }, { password: 1 })
+  const user = await User.findOne({ email }, { password: 1, role: 1 })
 
   if (!user) {
     throw new AppError(httpStatusCode.NOT_FOUND, 'User not found')

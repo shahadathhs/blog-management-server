@@ -8,6 +8,17 @@ const createBlog = async (payload: IBlog): Promise<IBlog> => {
   return result
 }
 
+const updateBlog = async (
+  payload: Partial<IBlog>,
+  id: string
+): Promise<IBlog | null> => {
+  const result = await Blog.findByIdAndUpdate(id, payload, {
+    new: true
+  }).populate('author', 'name email')
+  return result
+}
+
 export const BlogService = {
-  createBlog
+  createBlog,
+  updateBlog
 }

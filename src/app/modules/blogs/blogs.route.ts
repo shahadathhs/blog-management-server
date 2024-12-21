@@ -16,4 +16,11 @@ router.post(
   BlogController.createBlog
 )
 
+router.patch(
+  '/:id',
+  authentication(Role.User),
+  validateRequest(BlogValidation.updateBlogValidationSchema),
+  BlogController.updateBlog
+)
+
 export const BlogRoutes = router

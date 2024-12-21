@@ -10,6 +10,12 @@ import User from '../user/user.model'
 import { IJwtPayload } from './auth.interface'
 import { createToken } from './auth.utils'
 
+/**
+ * Registers a new user
+ *
+ * @param {IUser} payload - User data
+ * @returns {Promise<IUser>} Created user
+ */
 const registerUser = async (payload: IUser): Promise<IUser> => {
   const { name, email, password } = payload
 
@@ -24,6 +30,17 @@ const registerUser = async (payload: IUser): Promise<IUser> => {
   return user
 }
 
+/**
+ * Logs in an existing user
+ *
+ * @param {Object} payload - Login data
+ * @param {string} payload.email - User email
+ * @param {string} payload.password - User password
+ * @returns {Promise<Object>} Login result
+ * @fulfil {Object} result - Login result
+ * @fulfil {string} result.token - JSON Web Token
+ * @reject {AppError} error - If user is not found, blocked or invalid credentials
+ */
 const loginUser = async (payload: {
   email: string
   password: string

@@ -11,6 +11,18 @@ import simplifyError from '../../utils/simplifyError'
 import Blog from './blogs.model'
 import { BlogService } from './blogs.service'
 
+/**
+ * Creates a new blog
+ *
+ * @param {Request} req - The express request object
+ * @param {Response} res - The express response object
+ * @param {NextFunction} next - The express next middleware function
+ *
+ * @throws {AppError} - If the blog data is invalid
+ * @throws {AppError} - If the blog cannot be created
+ *
+ * @returns - A promise that resolves when the blog is created
+ */
 const createBlog = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId } = req.user
@@ -39,6 +51,20 @@ const createBlog = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+/**
+ * Updates an existing blog
+ *
+ * @param {Request} req - The express request object
+ * @param {Response} res - The express response object
+ * @param {NextFunction} next - The express next middleware function
+ *
+ * @throws {AppError} - If the blog data is invalid
+ * @throws {AppError} - If the blog is not found
+ * @throws {AppError} - If the user is not authorized to update the blog
+ * @throws {AppError} - If the blog cannot be updated
+ *
+ * @returns - A promise that resolves when the blog is updated
+ */
 const updateBlog = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const payload = req.body
@@ -95,6 +121,21 @@ const updateBlog = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+/**
+ * Deletes an existing blog.
+ *
+ * @param {Request} req - The express request object containing the blog ID in the parameters and user ID in the user object.
+ * @param {Response} res - The express response object to send the response.
+ * @param {NextFunction} next - The express next middleware function.
+ *
+ * @throws {AppError} - If the blog ID is not provided or invalid.
+ * @throws {AppError} - If the blog is not found.
+ * @throws {AppError} - If the user is not authorized to delete the blog.
+ * @throws {AppError} - If the blog cannot be deleted due to server error.
+ *
+ * @returns - A promise that resolves when the blog is successfully deleted.
+ */
+
 const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params
@@ -143,6 +184,17 @@ const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+/**
+ * Fetches all blogs with support for search, sorting, and filtering.
+ *
+ * @param {Request} req - The express request object containing query parameters.
+ * @param {Response} res - The express response object to send the response.
+ * @param {NextFunction} next - The express next middleware function.
+ *
+ * @throws {AppError} - If there is a server error.
+ *
+ * @returns - A promise that resolves when the blogs are successfully fetched.
+ */
 const getAllBlogs = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // * Query parameters

@@ -9,6 +9,20 @@ import simplifyError from '../../utils/simplifyError'
 import Blog from '../blogs/blogs.model'
 import User from '../user/user.model'
 
+/**
+ * Blocks a user from accessing the application
+ *
+ * @param {Request} req - The express request object
+ * @param {Response} res - The express response object
+ * @param {NextFunction} next - The express next function
+ *
+ * @throws {AppError} - If the user ID is not provided or is invalid
+ * @throws {AppError} - If the user is already blocked
+ * @throws {AppError} - If the user is not found
+ * @throws {AppError} - If the user cannot be blocked
+ *
+ * @returns {Promise<void>} - A promise that resolves when the user is blocked
+ */
 const blockUser = async (
   req: Request,
   res: Response,
@@ -60,6 +74,19 @@ const blockUser = async (
   }
 }
 
+/**
+ * Deletes a blog by its ID.
+ *
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @param {NextFunction} next - Express next middleware function.
+ *
+ * @throws {AppError}
+ *         - If the blog ID is not provided.
+ *         - If the blog ID is invalid.
+ *         - If the blog is not found.
+ *         - If there is an error deleting the blog.
+ */
 const deleteBlog = async (
   req: Request,
   res: Response,

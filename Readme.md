@@ -1,4 +1,3 @@
-```markdown
 # Blog Project - Backend Assignment
 
 ## Overview

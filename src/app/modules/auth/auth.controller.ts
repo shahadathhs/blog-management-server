@@ -7,6 +7,15 @@ import simplifyError from '../../utils/simplifyError'
 
 import { AuthService } from './auth.service'
 
+/**
+ * Register a new user
+ *
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @param {NextFunction} next - The next middleware function
+ *
+ * @returns {Promise<void>}
+ */
 const registerUser = async (
   req: Request,
   res: Response,
@@ -32,6 +41,15 @@ const registerUser = async (
   }
 }
 
+/**
+ * Login an existing user
+ *
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @param {NextFunction} next - The next middleware function
+ *
+ * @returns - returns token
+ */
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await AuthService.loginUser(req.body)

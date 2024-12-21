@@ -86,7 +86,49 @@ const updateBlog = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params
+    const { userId } = req.user
+
+    if (!id) {
+      throw new AppError(httpStatusCode.BAD_REQUEST, 'Blog id is required')
+    }
+
+    if (!mongoose.isValidObjectId(id)) {
+      throw new AppError(httpStatusCode.BAD_REQUEST, 'Invalid blog id')
+    }
+
+    // * Check if the blog exists
+    const blog = await Blog.findById(id)
+    if (!blog) {
+      throw new AppError(httpStatusCode.NOT_FOUND, 'Blog not found')
+    }
+
+    // * Check if the user is the author of the blog
+    if (blog.author.toString() !== userId) {
+      throw new AppError(
+        httpStatusCode.FORBIDDEN,
+        'You are not authorized to delete this blog'
+      )
+    }
+
+    await BlogService.deleteBlog(id)
+
+    sendResponse(res, {
+      statusCode: httpStatusCode.OK,
+      success: true,
+      message: 'Blog deleted successfully'
+    })
+  } catch (error) {
+    const errorResponse = simplifyError(error)
+    sendError(res, errorResponse)
+    next(error)
+  }
+}
+
 export const BlogController = {
   createBlog,
-  updateBlog
+  updateBlog,
+  deleteBlog
 }

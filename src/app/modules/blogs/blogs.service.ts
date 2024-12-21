@@ -18,7 +18,13 @@ const updateBlog = async (
   return result
 }
 
+const deleteBlog = async (id: string): Promise<IBlog | null> => {
+  const result = await Blog.findByIdAndDelete(id)
+  return result
+}
+
 export const BlogService = {
   createBlog,
-  updateBlog
+  updateBlog,
+  deleteBlog
 }

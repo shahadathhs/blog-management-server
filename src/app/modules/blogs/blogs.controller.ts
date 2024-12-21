@@ -9,12 +9,24 @@ import { BlogService } from './blogs.service'
 
 const createBlog = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await BlogService.createBlog(req.body)
+    const { userId } = req.user
+    const blogData = req.body
+
+    const payload = { ...blogData, author: userId }
+
+    const result = await BlogService.createBlog(payload)
+
     sendResponse(res, {
       statusCode: httpStatusCode.OK,
       success: true,
       message: 'Blog created successfully',
-      data: result
+      data: {
+        ...result.toObject(),
+        createdAt: undefined,
+        updatedAt: undefined,
+        __v: undefined,
+        isPublished: undefined
+      }
     })
   } catch (error) {
     const errorResponse = simplifyError(error)

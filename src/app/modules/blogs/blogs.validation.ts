@@ -24,7 +24,6 @@ const updateBlogValidationSchema = z.object({
   })
 })
 
-
 export const BlogValidation = {
   createBlogValidationSchema,
   updateBlogValidationSchema

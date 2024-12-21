@@ -1,3 +1,5 @@
+import { FilterQuery, QueryOptions } from 'mongoose'
+
 import { IBlog } from './blogs.interface'
 import Blog from './blogs.model'
 
@@ -23,8 +25,17 @@ const deleteBlog = async (id: string): Promise<IBlog | null> => {
   return result
 }
 
+const getAllBlogs = async (
+  query: FilterQuery<unknown>,
+  sortOptions: QueryOptions
+): Promise<IBlog[] | null> => {
+  const result = await Blog.find(query).sort(sortOptions)
+  return result
+}
+
 export const BlogService = {
   createBlog,
   updateBlog,
-  deleteBlog
+  deleteBlog,
+  getAllBlogs
 }

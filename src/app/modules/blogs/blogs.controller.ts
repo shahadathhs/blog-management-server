@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 
 import { httpStatusCode } from '../../enum/statusCode'
 import AppError from '../../errors/AppError'
+import { buildQuery } from '../../utils/queryBulider'
 import sendError from '../../utils/sendError'
 import sendResponse from '../../utils/sendResponse'
 import simplifyError from '../../utils/simplifyError'
@@ -127,8 +128,37 @@ const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const getAllBlogs = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // * Query parameters
+    const { search, sortBy, sortOrder, filter } = req.query
+
+    // * Use the generic query builder to get query and sort options
+    const { query, sortOptions } = buildQuery(
+      { search, sortBy, sortOrder, filter },
+      ['title', 'content'], // * Search fields for blogs
+      'author' // * Filter field for authorId
+    )
+
+    // * Fetch blogs using the generated query and sort options
+    const result = await Blog.find(query).sort(sortOptions)
+
+    sendResponse(res, {
+      statusCode: httpStatusCode.OK,
+      success: true,
+      message: 'Blogs fetched successfully',
+      data: result
+    })
+  } catch (error) {
+    const errorResponse = simplifyError(error)
+    sendError(res, errorResponse)
+    next(error)
+  }
+}
+
 export const BlogController = {
   createBlog,
   updateBlog,
-  deleteBlog
+  deleteBlog,
+  getAllBlogs
 }

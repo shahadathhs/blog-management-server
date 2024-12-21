@@ -23,10 +23,8 @@ router.patch(
   BlogController.updateBlog
 )
 
-router.delete(
-  '/:id',
-  authentication(Role.User),
-  BlogController.deleteBlog
-)
+router.delete('/:id', authentication(Role.User), BlogController.deleteBlog)
+
+router.get('/', BlogController.getAllBlogs)
 
 export const BlogRoutes = router

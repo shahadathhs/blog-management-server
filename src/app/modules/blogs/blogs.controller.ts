@@ -66,6 +66,14 @@ const updateBlog = async (req: Request, res: Response, next: NextFunction) => {
       throw new AppError(httpStatusCode.NOT_FOUND, 'Blog not found')
     }
 
+    // * Check if the user is the author of the blog
+    if (blog.author.toString() !== req.user.userId) {
+      throw new AppError(
+        httpStatusCode.FORBIDDEN,
+        'You are not authorized to update this blog'
+      )
+    }
+
     const result = await BlogService.updateBlog(payload, id)
 
     sendResponse(res, {
@@ -114,7 +122,14 @@ const deleteBlog = async (req: Request, res: Response, next: NextFunction) => {
       )
     }
 
-    await BlogService.deleteBlog(id)
+    const result = await BlogService.deleteBlog(id)
+
+    if (!result) {
+      throw new AppError(
+        httpStatusCode.INTERNAL_SERVER_ERROR,
+        'Blog not deleted'
+      )
+    }
 
     sendResponse(res, {
       statusCode: httpStatusCode.OK,
